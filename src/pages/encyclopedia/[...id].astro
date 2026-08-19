@@ -1,0 +1,4 @@
+---
+import Base from '../../layouts/Base.astro'; import {getCollection,render} from 'astro:content'; export async function getStaticPaths(){return (await getCollection('encyclopedia')).map(x=>({params:{id:x.id},props:{entry:x}}))}; const {entry}=Astro.props; const {Content}=await render(entry);
+---
+<Base title={entry.data.title}><article class="article"><p class="eyebrow">ENCYCLOPEDIA • {entry.data.category}</p><h1>{entry.data.title}</h1><p class="dek">{entry.data.description}</p><div class="prose"><Content/></div></article></Base>
