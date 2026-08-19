@@ -1,10 +1,10 @@
 {
-  "kicker": "AMATEUR RADIO • MISSOURI OZARKS",
+  "kicker": "AMATEUR RADIO • FROM THE OZARKS",
   "heroTitle": "Get on the air.",
   "heroAccent": "Know your gear.",
   "heroDescription": "Practical reviews, technical field notes, and a plain-language encyclopedia for new and experienced radio operators.",
   "primaryButtonLabel": "Explore the encyclopedia",
-  "secondaryButtonLabel": "Meet Field Programmer",
+  "secondaryButtonLabel": "Use Field Programmer",
   "monitoringStatus": "MONITORING THE CALLING FREQUENCY",
   "callingFrequency": "146.520",
   "startHereTitle": "START HERE",
