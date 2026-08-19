@@ -1,0 +1,1 @@
+{"name":"ka0med-website","type":"module","version":"1.0.0","scripts":{"dev":"astro dev","build":"astro build","preview":"astro preview"},"dependencies":{"@astrojs/mdx":"^4.3.6","astro":"^5.13.5"},"devDependencies":{}}

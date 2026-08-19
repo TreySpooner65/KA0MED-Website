@@ -1,0 +1,4 @@
+---
+import Base from '../../layouts/Base.astro'; import {getCollection,render} from 'astro:content'; export async function getStaticPaths(){return (await getCollection('editorial')).filter(x=>x.data.category==='Technical Article').map(x=>({params:{id:x.id},props:{entry:x}}))}; const {entry}=Astro.props; const {Content}=await render(entry);
+---
+<Base title={entry.data.title} description={entry.data.description}><article class="article"><p class="eyebrow">TECHNICAL ARTICLE • {entry.data.date.toLocaleDateString()}</p><h1>{entry.data.title}</h1><p class="dek">{entry.data.description}</p><div class="prose"><Content/></div></article></Base>
