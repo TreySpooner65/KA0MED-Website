@@ -1,13 +1,17 @@
 ---
-title: "Baofeng UV-5R Mini Review"
-description: "Is this shrunken-down handheld just a novelty, or does it deserve a place in an everyday-carry setup or emergency go-kit?"
-category: "Review"
+title: Baofeng UV-5R Mini Review
+description: Is this shrunken-down handheld just a novelty, or does it deserve a
+  place in an everyday-carry setup or emergency go-kit?
+category: Review
 date: 2026-08-02
 featured: true
-image: "https://media.base44.com/images/public/6a2ef62902b6cbf84fb908c6/fd2a1a67c_3e24fd09-e521-4b6f-b85a-13ea18e1db91.png"
-tags: ["Baofeng", "Handhelds", "Beginner", "VHF/UHF"]
+image: /KA0MED-Website/uploads/fd2a1a67c_3e24fd09-e521-4b6f-b85a-13ea18e1db91.png
+tags:
+  - Baofeng
+  - Handhelds
+  - Beginner
+  - VHF/UHF
 ---
-
 Is the Baofeng UV-5R Mini just a novelty, or does this shrunken-down handheld deserve a spot in your everyday-carry setup or emergency go-kit? Let’s break it down.
 
 ## Size
@@ -50,14 +54,16 @@ The menu system is still recognizably Baofeng, so new users should expect a lear
 
 ## Technical Data
 
+
 | Specification | Value |
-| --- | --- |
+| ----------------------- | --------------------------------------------------------------------- |
 | Frequency classes | VHF and UHF |
 | Rated power | 5 W / 2 W / 1 W |
 | Mode | FM |
 | Typical price at review | About $25 |
 | Transmit bands | 2 m and 70 cm |
 | Receive coverage | Airband, FM broadcast, 300–390 MHz, 2 m, 70 cm, 500–590 MHz, and NOAA |
+
 
 ## Verdict
 
