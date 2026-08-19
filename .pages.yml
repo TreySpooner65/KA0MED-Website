@@ -89,6 +89,48 @@ content:
       - { name: tags, label: Tags, type: string, list: true, required: false }
       - { name: body, label: Article, type: rich-text, required: true }
 
+  - name: reference
+    label: Reference Library
+    type: file
+    path: src/data/reference.json
+    fields:
+      - { name: kicker, label: Page Eyebrow, type: string, required: true }
+      - { name: title, label: Page Title, type: string, required: true }
+      - { name: description, label: Page Description, type: text, required: true }
+      - name: bandPlan
+        label: Band Plan
+        type: object
+        list: true
+        fields:
+          - { name: band, label: Band, type: string, required: true }
+          - { name: frequency, label: Frequency, type: string, required: true }
+          - { name: modes, label: Modes, type: string, required: true }
+          - { name: notes, label: Notes, type: string, required: true }
+      - name: qCodes
+        label: Q-Codes
+        type: object
+        list: true
+        fields:
+          - { name: code, label: Code, type: string, required: true }
+          - { name: meaning, label: Meaning, type: string, required: true }
+      - name: phoneticAlphabet
+        label: Phonetic Alphabet
+        type: object
+        list: true
+        fields:
+          - { name: letter, label: Letter, type: string, required: true }
+          - { name: word, label: Word, type: string, required: true }
+      - { name: rstDescription, label: RST Introduction, type: text, required: true }
+      - name: rstRows
+        label: RST Values
+        type: object
+        list: true
+        fields:
+          - { name: value, label: Value, type: string, required: true }
+          - { name: readability, label: Readability, type: string, required: true }
+          - { name: strength, label: Strength, type: string, required: true }
+          - { name: tone, label: Tone, type: string, required: true }
+
   - name: encyclopedia
     label: Amateur Radio Encyclopedia
     type: collection
