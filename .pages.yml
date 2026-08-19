@@ -1,0 +1,48 @@
+media:
+  input: public/uploads
+  output: /KA0MED-Website/uploads
+
+content:
+  - name: editorial
+    label: Reviews & Technical Articles
+    type: collection
+    path: src/content/editorial
+    filename: "{primary}.md"
+    view:
+      fields: [title, category, date, featured]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: Summary, type: text, required: true }
+      - name: category
+        label: Section
+        type: select
+        required: true
+        options:
+          values: [Review, Technical Article]
+      - { name: date, label: Publish Date, type: date, required: true }
+      - { name: featured, label: Feature on Homepage, type: boolean, default: false }
+      - { name: image, label: Hero Image, type: image, required: false }
+      - { name: tags, label: Tags, type: string, list: true, required: false }
+      - { name: body, label: Article, type: rich-text, required: true }
+
+  - name: encyclopedia
+    label: Amateur Radio Encyclopedia
+    type: collection
+    path: src/content/encyclopedia
+    filename: "{primary}.md"
+    view:
+      fields: [title, letter, category]
+      primary: title
+      sort: [title]
+    fields:
+      - { name: title, label: Term, type: string, required: true }
+      - { name: description, label: Short Definition, type: text, required: true }
+      - { name: letter, label: Alphabet Letter, type: string, required: true }
+      - { name: category, label: Category, type: string, required: true }
+      - { name: aliases, label: Alternate Names, type: string, list: true, required: false }
+      - { name: body, label: Full Explanation, type: rich-text, required: true }
