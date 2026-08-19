@@ -4,6 +4,8 @@ An Astro-powered website for radio reviews, technical articles, a beginner-frien
 
 ## Publishing content
 
+Public URL: https://treyspooner65.github.io/KA0MED-Website/
+
 Sign in at [Pages CMS](https://app.pagescms.org), select this repository, and use the structured editors for Reviews & Technical Articles or the Amateur Radio Encyclopedia. Images upload into `public/uploads`, and each saved entry triggers a new GitHub Pages deployment.
 
 ## Local development
