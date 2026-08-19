@@ -4,7 +4,7 @@ An Astro-powered website for radio reviews, technical articles, a beginner-frien
 
 ## Publishing content
 
-After GitHub Pages and the CMS authenticator are configured, open `/admin/` on the published site. Reviews and technical articles share an editor but appear in separate site sections. Encyclopedia entries have their own structured editor.
+Sign in at [Pages CMS](https://app.pagescms.org), select this repository, and use the structured editors for Reviews & Technical Articles or the Amateur Radio Encyclopedia. Images upload into `public/uploads`, and each saved entry triggers a new GitHub Pages deployment.
 
 ## Local development
 
