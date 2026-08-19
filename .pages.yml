@@ -3,6 +3,65 @@ media:
   output: /KA0MED-Website/uploads
 
 content:
+  - name: site
+    label: Site Identity & Footer
+    type: file
+    path: src/data/site.json
+    fields:
+      - { name: brandName, label: Brand Name, type: string, required: true }
+      - { name: brandTagline, label: Brand Tagline, type: string, required: true }
+      - { name: footerDescription, label: Footer Description, type: text, required: true }
+      - { name: copyrightName, label: Copyright Name, type: string, required: true }
+
+  - name: homepage
+    label: Homepage
+    type: file
+    path: src/data/homepage.json
+    fields:
+      - { name: kicker, label: Hero Eyebrow, type: string, required: true }
+      - { name: heroTitle, label: Hero Title, type: string, required: true }
+      - { name: heroAccent, label: Hero Highlighted Line, type: string, required: true }
+      - { name: heroDescription, label: Hero Description, type: text, required: true }
+      - { name: primaryButtonLabel, label: Primary Button, type: string, required: true }
+      - { name: secondaryButtonLabel, label: Secondary Button, type: string, required: true }
+      - { name: monitoringStatus, label: Radio Status Text, type: string, required: true }
+      - { name: callingFrequency, label: Display Frequency, type: string, required: true }
+      - { name: startHereTitle, label: Start Here Title, type: string, required: true }
+      - { name: startHereSubtitle, label: Start Here Subtitle, type: string, required: true }
+      - { name: latestKicker, label: Latest Section Eyebrow, type: string, required: true }
+      - { name: latestTitle, label: Latest Section Title, type: string, required: true }
+      - { name: encyclopediaKicker, label: Encyclopedia Eyebrow, type: string, required: true }
+      - { name: encyclopediaTitle, label: Encyclopedia Title, type: string, required: true }
+      - { name: encyclopediaDescription, label: Encyclopedia Description, type: text, required: true }
+      - { name: featuredLetter, label: Featured Letter, type: string, required: true }
+      - { name: featuredTerm, label: Featured Term, type: string, required: true }
+      - { name: featuredDefinition, label: Featured Definition, type: text, required: true }
+      - { name: appKicker, label: App Promotion Eyebrow, type: string, required: true }
+      - { name: appTitle, label: App Promotion Title, type: string, required: true }
+      - { name: appDescription, label: App Promotion Description, type: text, required: true }
+      - { name: appButtonLabel, label: App Promotion Button, type: string, required: true }
+
+  - name: field-programmer
+    label: Field Programmer Page
+    type: file
+    path: src/data/field-programmer.json
+    fields:
+      - { name: kicker, label: Hero Eyebrow, type: string, required: true }
+      - { name: heroTitle, label: Hero First Line, type: string, required: true }
+      - { name: heroAccent, label: Hero Highlighted Line, type: string, required: true }
+      - { name: heroFinalLine, label: Hero Final Line, type: string, required: true }
+      - { name: description, label: App Description, type: text, required: true }
+      - { name: buttonLabel, label: Button Label, type: string, required: true }
+      - { name: featureOneTitle, label: Feature 1 Title, type: string, required: true }
+      - { name: featureOneDescription, label: Feature 1 Description, type: text, required: true }
+      - { name: featureTwoTitle, label: Feature 2 Title, type: string, required: true }
+      - { name: featureTwoDescription, label: Feature 2 Description, type: text, required: true }
+      - { name: featureThreeTitle, label: Feature 3 Title, type: string, required: true }
+      - { name: featureThreeDescription, label: Feature 3 Description, type: text, required: true }
+      - { name: supportedKicker, label: Supported Radios Eyebrow, type: string, required: true }
+      - { name: supportedTitle, label: Supported Radios Title, type: string, required: true }
+      - { name: supportedRadios, label: Supported Radios, type: string, list: true, required: true }
+
   - name: editorial
     label: Reviews & Technical Articles
     type: collection
@@ -29,6 +88,48 @@ content:
       - { name: image, label: Hero Image, type: image, required: false }
       - { name: tags, label: Tags, type: string, list: true, required: false }
       - { name: body, label: Article, type: rich-text, required: true }
+
+  - name: reference
+    label: Reference Library
+    type: file
+    path: src/data/reference.json
+    fields:
+      - { name: kicker, label: Page Eyebrow, type: string, required: true }
+      - { name: title, label: Page Title, type: string, required: true }
+      - { name: description, label: Page Description, type: text, required: true }
+      - name: bandPlan
+        label: Band Plan
+        type: object
+        list: true
+        fields:
+          - { name: band, label: Band, type: string, required: true }
+          - { name: frequency, label: Frequency, type: string, required: true }
+          - { name: modes, label: Modes, type: string, required: true }
+          - { name: notes, label: Notes, type: string, required: true }
+      - name: qCodes
+        label: Q-Codes
+        type: object
+        list: true
+        fields:
+          - { name: code, label: Code, type: string, required: true }
+          - { name: meaning, label: Meaning, type: string, required: true }
+      - name: phoneticAlphabet
+        label: Phonetic Alphabet
+        type: object
+        list: true
+        fields:
+          - { name: letter, label: Letter, type: string, required: true }
+          - { name: word, label: Word, type: string, required: true }
+      - { name: rstDescription, label: RST Introduction, type: text, required: true }
+      - name: rstRows
+        label: RST Values
+        type: object
+        list: true
+        fields:
+          - { name: value, label: Value, type: string, required: true }
+          - { name: readability, label: Readability, type: string, required: true }
+          - { name: strength, label: Strength, type: string, required: true }
+          - { name: tone, label: Tone, type: string, required: true }
 
   - name: encyclopedia
     label: Amateur Radio Encyclopedia

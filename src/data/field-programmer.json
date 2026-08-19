@@ -1,0 +1,23 @@
+{
+  "kicker": "ANDROID RADIO PROGRAMMING",
+  "heroTitle": "Your radio.",
+  "heroAccent": "Your channels.",
+  "heroFinalLine": "Anywhere.",
+  "description": "Field Programmer lets you configure supported handheld radios from Android without accounts, bloat, or an internet connection.",
+  "buttonLabel": "View supported radios",
+  "featureOneTitle": "Offline by design",
+  "featureOneDescription": "Your channel plans and radio data stay on your device.",
+  "featureTwoTitle": "Built for the field",
+  "featureTwoDescription": "A focused mobile workflow when carrying a laptop makes no sense.",
+  "featureThreeTitle": "Growing radio support",
+  "featureThreeDescription": "Drivers are tested against real radios and expanded continuously.",
+  "supportedKicker": "SUPPORTED RADIO FAMILIES",
+  "supportedTitle": "Built around radios operators actually carry.",
+  "supportedRadios": [
+    "UV-5R Family",
+    "UV-5R Mini",
+    "UV-5G Mini",
+    "UV-32",
+    "AR-152"
+  ]
+}

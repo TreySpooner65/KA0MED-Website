@@ -1,0 +1,30 @@
+{
+  "kicker": "FREQUENCY GRID",
+  "title": "Reference Library",
+  "description": "Band plans, Q-codes, phonetic alphabet, and essential amateur radio reference—everything you need at your operating position.",
+  "bandPlan": [
+    {"band":"160 m","frequency":"1.800–2.000 MHz","modes":"CW, SSB, Digital","notes":"Nighttime propagation and challenging DX"},
+    {"band":"80 m","frequency":"3.500–4.000 MHz","modes":"CW, SSB, Digital","notes":"Regional coverage; best at night"},
+    {"band":"60 m","frequency":"5.332–5.405 MHz","modes":"USB, CW, Digital","notes":"Channelized; 100 W ERP maximum"},
+    {"band":"40 m","frequency":"7.000–7.300 MHz","modes":"CW, SSB, Digital","notes":"Reliable day and night; good DX"},
+    {"band":"30 m","frequency":"10.100–10.150 MHz","modes":"CW, Digital","notes":"WARC band; no contests"},
+    {"band":"20 m","frequency":"14.000–14.350 MHz","modes":"CW, SSB, Digital","notes":"Primary daytime DX band"},
+    {"band":"17 m","frequency":"18.068–18.168 MHz","modes":"CW, SSB, Digital","notes":"WARC band; daytime DX"},
+    {"band":"15 m","frequency":"21.000–21.450 MHz","modes":"CW, SSB, Digital","notes":"Good during solar maximum"},
+    {"band":"12 m","frequency":"24.890–24.990 MHz","modes":"CW, SSB, Digital","notes":"WARC band; solar-cycle dependent"},
+    {"band":"10 m","frequency":"28.000–29.700 MHz","modes":"CW, SSB, FM, Digital","notes":"Excellent during solar maximum; local repeaters"},
+    {"band":"6 m","frequency":"50.000–54.000 MHz","modes":"CW, SSB, FM, Digital","notes":"The Magic Band; sporadic-E propagation"},
+    {"band":"2 m","frequency":"144.000–148.000 MHz","modes":"FM, SSB, CW, Digital","notes":"Primary VHF band; repeaters"},
+    {"band":"70 cm","frequency":"420.000–450.000 MHz","modes":"FM, SSB, CW, Digital, ATV","notes":"UHF repeaters and satellites"}
+  ],
+  "qCodes": [
+    {"code":"QRG","meaning":"Your exact frequency"},{"code":"QRL","meaning":"Frequency is busy"},{"code":"QRM","meaning":"Man-made interference"},{"code":"QRN","meaning":"Natural interference or static"},{"code":"QRO","meaning":"Increase power"},{"code":"QRP","meaning":"Decrease power or low-power operation"},{"code":"QRS","meaning":"Send more slowly"},{"code":"QRT","meaning":"Stop sending or going off the air"},{"code":"QRV","meaning":"I am ready"},{"code":"QRZ","meaning":"Who is calling me?"},{"code":"QSB","meaning":"Fading signal"},{"code":"QSL","meaning":"Acknowledged or confirmation card"},{"code":"QSO","meaning":"Contact or conversation"},{"code":"QSY","meaning":"Change frequency"},{"code":"QTH","meaning":"Location or position"}
+  ],
+  "phoneticAlphabet": [
+    {"letter":"A","word":"Alfa"},{"letter":"B","word":"Bravo"},{"letter":"C","word":"Charlie"},{"letter":"D","word":"Delta"},{"letter":"E","word":"Echo"},{"letter":"F","word":"Foxtrot"},{"letter":"G","word":"Golf"},{"letter":"H","word":"Hotel"},{"letter":"I","word":"India"},{"letter":"J","word":"Juliett"},{"letter":"K","word":"Kilo"},{"letter":"L","word":"Lima"},{"letter":"M","word":"Mike"},{"letter":"N","word":"November"},{"letter":"O","word":"Oscar"},{"letter":"P","word":"Papa"},{"letter":"Q","word":"Quebec"},{"letter":"R","word":"Romeo"},{"letter":"S","word":"Sierra"},{"letter":"T","word":"Tango"},{"letter":"U","word":"Uniform"},{"letter":"V","word":"Victor"},{"letter":"W","word":"Whiskey"},{"letter":"X","word":"X-ray"},{"letter":"Y","word":"Yankee"},{"letter":"Z","word":"Zulu"}
+  ],
+  "rstDescription": "The RST system rates received signal quality: R is readability from 1–5, S is strength from 1–9, and T is tone from 1–9 for CW. A report of 599 means perfectly readable, extremely strong, and perfect tone.",
+  "rstRows": [
+    {"value":"1","readability":"Unreadable","strength":"Faint, barely perceptible","tone":"Extremely rough"},{"value":"3","readability":"Readable with difficulty","strength":"Weak","tone":"Rough and low-pitched"},{"value":"5","readability":"Perfectly readable","strength":"Fairly good","tone":"Musical with ripple"},{"value":"7","readability":"—","strength":"Moderately strong","tone":"Near DC with smooth ripple"},{"value":"9","readability":"—","strength":"Extremely strong","tone":"Perfect tone with no ripple"}
+  ]
+}
