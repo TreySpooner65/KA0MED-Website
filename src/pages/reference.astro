@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import reference from '../data/reference.json';
+import '../styles/reference.css';
+---
+<Base title="Amateur Radio Reference" description={reference.description}>
+  <section class="page-hero"><p class="eyebrow">{reference.kicker}</p><h1>{reference.title}</h1><p>{reference.description}</p></section>
+  <nav class="reference-nav" aria-label="Reference topics"><a href="#band-plan">Band Plan</a><a href="#q-codes">Q-Codes</a><a href="#phonetic">Phonetic Alphabet</a><a href="#rst">RST System</a></nav>
+  <section class="reference-section" id="band-plan"><p class="eyebrow">UNITED STATES AMATEUR ALLOCATIONS</p><h2>Band Plan</h2><div class="table-scroll"><table class="reference-table"><thead><tr><th>Band</th><th>Frequency</th><th>Modes</th><th>Notes</th></tr></thead><tbody>{reference.bandPlan.map((row) => <tr><td><b>{row.band}</b></td><td>{row.frequency}</td><td>{row.modes}</td><td>{row.notes}</td></tr>)}</tbody></table></div></section>
+  <section class="reference-section alt" id="q-codes"><p class="eyebrow">OPERATING SHORTHAND</p><h2>Common Q-Codes</h2><div class="reference-grid">{reference.qCodes.map((item) => <article><strong>{item.code}</strong><p>{item.meaning}</p></article>)}</div></section>
+  <section class="reference-section" id="phonetic"><p class="eyebrow">ITU STANDARD</p><h2>Phonetic Alphabet</h2><div class="phonetic-grid">{reference.phoneticAlphabet.map((item) => <article><span>{item.letter}</span><b>{item.word}</b></article>)}</div></section>
+  <section class="reference-section alt" id="rst"><p class="eyebrow">SIGNAL REPORTING</p><h2>RST System</h2><p class="reference-intro">{reference.rstDescription}</p><div class="table-scroll"><table class="reference-table"><thead><tr><th>Value</th><th>Readability (R)</th><th>Strength (S)</th><th>Tone (T)</th></tr></thead><tbody>{reference.rstRows.map((row) => <tr><td><b>{row.value}</b></td><td>{row.readability}</td><td>{row.strength}</td><td>{row.tone}</td></tr>)}</tbody></table></div></section>
+</Base>
