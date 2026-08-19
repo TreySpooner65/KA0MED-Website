@@ -1,9 +1,11 @@
 ---
 import '../styles/global.css';
 import '../styles/density.css';
+import '../styles/themes.css';
 import site from '../data/site.json';
 import { sitePath } from '../utils/paths';
-const { title='KA0MED', description='Amateur radio, explained from the field.' } = Astro.props;
+const { title='KA0MED', description='Amateur radio, explained from the field.', theme: requestedTheme } = Astro.props;
+const theme = requestedTheme ?? (title === 'Field Programmer' ? 'field' : 'main');
 ---
 <!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="description" content={description}/><title>{title} | KA0MED</title></head>
-<body><header class="site-header"><a class="brand" href={sitePath()}><span class="mark">K0</span><span><b>{site.brandName}</b><small>{site.brandTagline}</small></span></a><nav aria-label="Primary"><a href={sitePath('reviews/')}>Reviews</a><a href={sitePath('technical/')}>Technical</a><a href={sitePath('reference/')}>Reference</a><a href={sitePath('encyclopedia/')}>Encyclopedia</a><a class="app-link" href={sitePath('field-programmer/')}>Field Programmer</a></nav></header><main><slot /></main><footer><div><b>{site.brandName}</b><p>{site.footerDescription}</p></div><div class="footer-links"><a href={sitePath('reviews/')}>Reviews</a><a href={sitePath('technical/')}>Technical Articles</a><a href={sitePath('reference/')}>Reference</a><a href={sitePath('encyclopedia/')}>Encyclopedia</a></div><p class="fine">© {new Date().getFullYear()} {site.copyrightName}</p></footer></body></html>
+<body class={`${theme}-theme`}><header class="site-header"><a class="brand" href={sitePath()}><span class="mark">K0</span><span><b>{site.brandName}</b><small>{site.brandTagline}</small></span></a><nav aria-label="Primary"><a href={sitePath('reviews/')}>Reviews</a><a href={sitePath('technical/')}>Technical</a><a href={sitePath('reference/')}>Reference</a><a href={sitePath('encyclopedia/')}>Encyclopedia</a><a class="app-link" href={sitePath('field-programmer/')}>Field Programmer</a></nav></header><main><slot /></main><footer><div><b>{site.brandName}</b><p>{site.footerDescription}</p></div><div class="footer-links"><a href={sitePath('reviews/')}>Reviews</a><a href={sitePath('technical/')}>Technical Articles</a><a href={sitePath('reference/')}>Reference</a><a href={sitePath('encyclopedia/')}>Encyclopedia</a></div><p class="fine">© {new Date().getFullYear()} {site.copyrightName}</p></footer></body></html>
