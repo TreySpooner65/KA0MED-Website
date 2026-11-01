@@ -60,7 +60,35 @@ content:
       - { name: featureThreeDescription, label: Feature 3 Description, type: text, required: true }
       - { name: supportedKicker, label: Supported Radios Eyebrow, type: string, required: true }
       - { name: supportedTitle, label: Supported Radios Title, type: string, required: true }
-      - { name: supportedRadios, label: Supported Radios, type: string, list: true, required: true }
+
+  - name: radio-catalog
+    label: Field Programmer Radio Status Tracker
+    type: file
+    path: src/data/radio-catalog.json
+    fields:
+      - { name: checked, label: Snapshot Checked (YYYY-MM-DD), type: string, required: true }
+      - name: radios
+        label: Radio Models
+        type: object
+        list: true
+        fields:
+          - { name: id, label: Stable Model ID (keep unchanged for shared links), type: string, required: true }
+          - { name: brand, label: Brand, type: string, required: true }
+          - { name: name, label: Exact Model and Generation, type: string, required: true }
+          - name: status
+            label: Support Status
+            type: select
+            required: true
+            options:
+              values: [supported, development]
+          - { name: usb, label: USB Programming, type: boolean, default: false }
+          - { name: bluetooth, label: Native Bluetooth Programming, type: boolean, default: false }
+          - { name: digital, label: Analog and DMR, type: boolean, default: false }
+          - { name: gmrs, label: GMRS-only App Profile, type: boolean, default: false }
+          - { name: channels, label: App Profile Channel Capacity, type: number, required: true }
+          - { name: nameLength, label: Channel Name Character Limit (blank if unverified), type: number }
+          - { name: aliases, label: Search Aliases, type: string, list: true }
+          - { name: notes, label: Model Notes or Development Status, type: text }
 
   - name: editorial
     label: Reviews & Technical Articles

@@ -1,0 +1,40 @@
+---
+import catalog from '../data/radio-catalog.json';
+import '../styles/radio-catalog.css';
+const { kicker = 'RADIO SUPPORT TRACKER', title = 'Find your radio. Know its status.' } = Astro.props;
+const supported = catalog.radios.filter(r => r.status === 'supported');
+const brandCount = new Set(supported.map(r => r.brand)).size;
+const brands = [...new Set(catalog.radios.map(r => r.brand))].sort();
+const date = new Date(`${catalog.checked}T12:00:00Z`).toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric',timeZone:'UTC'});
+---
+<section class="fp-radio-catalog" id="radios" aria-labelledby="radio-catalog-title">
+  <div class="rc-heading"><div><p class="eyebrow">{kicker}</p><h2 id="radio-catalog-title">{title}</h2><p>Check the exact model, support status, and connection before you program.</p></div><div class="rc-stat"><strong>{supported.length}</strong><span>SUPPORTED MODELS<br />{brandCount} BRANDS</span></div></div>
+  <div class="rc-search" data-enhanced hidden><label class="sr-only" for="radio-search">Search radios by model or brand</label><span aria-hidden="true">⌕</span><input id="radio-search" type="search" placeholder="Search a model or brand…" autocomplete="off" /><kbd aria-hidden="true">/</kbd></div>
+  <div class="rc-layout">
+    <aside class="rc-filters" aria-label="Filter radios" data-enhanced hidden>
+      <div class="rc-filter-heading"><b>REFINE YOUR SEARCH</b><button class="rc-text" id="reset-filters">Reset</button></div>
+      <label for="brand-filter">Brand<select id="brand-filter" aria-label="Brand"><option value="all">All brands</option>{brands.map(brand => <option>{brand}</option>)}</select></label>
+      <label for="connection-filter">Connection<select id="connection-filter" aria-label="Connection"><option value="all">Any connection</option><option value="bluetooth">Native Bluetooth</option><option value="usb">USB cable</option></select></label>
+      <label for="mode-filter">Capability<select id="mode-filter" aria-label="Capability"><option value="all">All capabilities</option><option value="digital">Analog + DMR</option><option value="analog">Analog</option><option value="gmrs">GMRS-only profiles</option></select></label>
+      <label for="status-filter">Support status<select id="status-filter" aria-label="Support status"><option value="all">All statuses</option><option value="supported">Supported</option><option value="development">In development</option></select></label>
+      <div class="rc-filter-note"><b>EXACT MODEL MATTERS</b><p>Similar names can use different protocols. Check the model, generation, and firmware.</p></div>
+    </aside>
+    <div class="rc-results">
+      <div class="rc-toolbar"><p id="result-count" role="status" aria-live="polite">{catalog.radios.length} radios · {supported.length} supported</p><label data-enhanced hidden><span class="sr-only">Sort radios</span><select id="sort-order"><option value="featured">Featured first</option><option value="name">Model A–Z</option><option value="brand">Brand A–Z</option><option value="channels">Most channels</option></select></label></div>
+      <div id="active-filters" class="rc-active" aria-label="Active filters"></div>
+      <div id="radio-grid" class="rc-grid">{catalog.radios.map(r => <article class="rc-card" aria-label={`${r.brand} ${r.name}`}><div class="rc-card-main"><div class="rc-card-top"><span class="rc-brand">{r.brand}</span><span class:list={['rc-status', {development:r.status==='development'}]}>{r.status==='supported'?'Supported':'In development'}</span></div><h3>{r.name}</h3><p class="rc-meta">{r.digital?'Analog + DMR':'Analog'} · {r.channels.toLocaleString()} channels</p><div class="rc-connections">{r.usb&&<span>USB</span>}{r.bluetooth&&<span>Bluetooth</span>}{r.gmrs&&<span>GMRS profile</span>}</div><details class="rc-basic"><summary>Radio details</summary><p>Channel name limit: {r.nameLength?`${r.nameLength} characters`:'Not verified'}.</p>{r.notes&&<p>{r.notes}</p>}</details></div></article>)}</div>
+      <div class="rc-bottom" data-enhanced hidden><span id="shown-count"></span><button class="rc-outline" id="load-more" hidden>Show more radios ↓</button></div>
+    </div>
+  </div>
+  <div class="rc-source"><p><b>Snapshot checked {date}.</b> Supported means the exact model is listed in the app registry; it does not verify every firmware or setting. Native Bluetooth is separate from external adapter compatibility. Development models are excluded from the supported total.</p><button class="rc-text" data-open="status" data-enhanced hidden>About these statuses ↗</button></div>
+  <div class="rc-download"><div><b>READY TO CONNECT?</b><p>Read your radio first and save a backup before editing.</p></div><a href="https://play.google.com/store/apps/details?id=com.ka0med.fieldprogrammer" class="button" target="_blank" rel="noopener">Get Field Programmer on Google Play ↗</a></div>
+  <noscript><p class="rc-noscript">All models and basic details are shown above. Enable JavaScript to search, filter, and compare radios.</p></noscript>
+  <div id="compare-tray" class="rc-compare-tray" hidden><div><b id="compare-count"></b><span>Select up to 3 radios</span></div><button class="rc-text" id="clear-compare">Clear</button><button class="rc-solid" id="compare-button">Compare radios ↗</button></div>
+  <dialog id="radio-detail-dialog" aria-labelledby="radio-dialog-title"><button class="rc-close" aria-label="Close radio dialog">×</button><div id="radio-dialog-content"></div></dialog>
+  <div class="rc-toast" id="radio-toast" role="status" aria-live="polite" hidden></div>
+  <script is:inline type="application/json" id="radio-catalog-data" set:html={JSON.stringify(catalog).replace(/</g,'\\u003c')} />
+</section>
+<script>
+  import { initRadioCatalog } from '../scripts/radio-catalog.js';
+  initRadioCatalog();
+</script>
