@@ -1,4 +1,4 @@
-import { filterRadios, formatMode } from '../utils/radio-catalog.js';
+import { describeEntry, filterRadios, formatCatalogCount, formatMode } from '../utils/radio-catalog.js';
 
 export function initRadioCatalog() {
   const root=document.querySelector('.fp-radio-catalog');
@@ -40,16 +40,33 @@ export function initRadioCatalog() {
     if(checked&&selected.size>=3&&!selected.has(id)){notify('Compare up to 3 radios. Remove one to add another.');syncCompare();return false;}
     checked?selected.add(id):selected.delete(id);syncCompare();return true;
   }
-  function renderCard(r){return `<article class="rc-card" aria-label="${escapeHTML(r.brand+' '+r.name)}"><div class="rc-card-main"><div class="rc-card-top"><span class="rc-brand">${escapeHTML(r.brand)}</span>${status(r)}</div><h3>${escapeHTML(r.name)}</h3><p class="rc-meta">${formatMode(r)} · ${r.channels.toLocaleString()} channels</p><div class="rc-connections">${r.usb?'<span>USB</span>':''}${r.bluetooth?'<span>Bluetooth</span>':''}${r.gmrs?'<span>GMRS profile</span>':''}</div></div><div class="rc-card-footer"><label><input type="checkbox" data-compare="${r.id}" aria-label="Compare ${escapeHTML(r.brand+' '+r.name)}" ${selected.has(r.id)?'checked':''}> Compare</label><button class="rc-text" data-radio="${r.id}" aria-label="Details for ${escapeHTML(r.brand+' '+r.name)}">Details ↗</button></div></article>`;}
+  function renderCard(r) {
+    const name = escapeHTML(`${r.brand} ${r.name}`);
+    return `<article class="rc-card" aria-label="${name}">
+      <div class="rc-card-main">
+        <div class="rc-card-top"><span class="rc-brand">${escapeHTML(r.brand)}</span>${status(r)}</div>
+        <h3>${escapeHTML(r.name)}</h3>
+        <p class="rc-meta">${describeEntry(r)}</p>
+        <div class="rc-connections">
+          ${r.usb ? '<span>USB</span>' : ''}
+          ${r.bluetooth ? '<span>Bluetooth</span>' : ''}
+          ${r.gmrs ? '<span>GMRS profile</span>' : ''}
+        </div>
+      </div>
+      <div class="rc-card-footer">
+        ${r.programmingAdapter ? '' : `<label><input type="checkbox" data-compare="${r.id}" aria-label="Compare ${name}" ${selected.has(r.id) ? 'checked' : ''}> Compare</label>`}
+        <button class="rc-text" data-radio="${r.id}" aria-label="Details for ${name}">Details</button>
+      </div>
+    </article>`;
+  }
   function render(){
     const filters=Object.fromEntries(Object.entries(controls).map(([key,control])=>[key,control.value]));
     const result=filterRadios(radios,{...filters,query:search.value});
-    const supported=result.filter(r=>r.status==='supported').length;
-    $('#result-count').textContent=`${result.length} ${result.length===1?'radio':'radios'} found · ${supported} supported${result.length>supported?`, ${result.length-supported} in development`:''}`;
-    $('#radio-grid').innerHTML=result.length?result.slice(0,limit).map(renderCard).join(''):'<div class="rc-empty"><h3>No matching radios.</h3><p>Try another model or remove a filter.</p><button class="rc-outline" id="empty-reset">Clear search & filters</button></div>';
-    $('#shown-count').textContent=result.length?`Showing ${Math.min(limit,result.length)} of ${result.length} radios`:'';
+    $('#result-count').textContent = formatCatalogCount(result);
+    $('#radio-grid').innerHTML=result.length?result.slice(0,limit).map(renderCard).join(''):'<div class="rc-empty"><h3>No matching results.</h3><p>Try another model or remove a filter.</p><button class="rc-outline" id="empty-reset">Clear search & filters</button></div>';
+    $('#shown-count').textContent=result.length?`Showing ${Math.min(limit,result.length)} of ${result.length} results`:'';
     $('#load-more').hidden=limit>=result.length;
-    $('#load-more').textContent=`Show ${Math.min(12,result.length-limit)} more radios ↓`;
+    $('#load-more').textContent=`Show ${Math.min(12,result.length-limit)} more results`;
     $('#active-filters').innerHTML=Object.entries(controls).filter(([key,control])=>key!=='sort'&&control.value!=='all').map(([key,control])=>`<button data-remove-filter="${key}" aria-label="Remove ${escapeHTML(control.selectedOptions[0].textContent)} filter">${escapeHTML(control.selectedOptions[0].textContent)} ×</button>`).join('');
     syncCompare();
   }
@@ -58,6 +75,15 @@ export function initRadioCatalog() {
   function showRadio(id,update=true){
     const r=radios.find(r=>r.id===id);if(!r)return;
     if(update){const url=new URL(location.href);url.searchParams.set('radio',id);history.replaceState(null,'',url);}
+    if (r.programmingAdapter) {
+      showDialog(`
+        <p class="rc-eyebrow">${escapeHTML(r.brand)} / PROGRAMMING ADAPTER</p>
+        <h2 id="radio-dialog-title">${escapeHTML(r.name)}</h2>
+        ${status(r)}
+        <p class="rc-note">${escapeHTML(r.notes)}</p>
+        <button class="rc-text" data-copy-radio="${id}">Copy adapter link</button>`);
+      return;
+    }
     const note=r.notes||(r.bluetooth?'USB and native Bluetooth are listed for this model. Use the exact model profile.':'USB programming is listed. Native Bluetooth is not listed; external adapters require their own compatibility check.');
     const development = r.status === 'development';
     const connections = [];
@@ -67,9 +93,9 @@ export function initRadioCatalog() {
       <p class="rc-eyebrow">${escapeHTML(r.brand)} / RADIO DETAILS</p>
       <h2 id="radio-dialog-title">${escapeHTML(r.name)}</h2>
       ${status(r)}
-      <p>${development ? 'Available in development builds.' : 'Listed in the stable app’s radio picker.'}</p>
+      ${development ? '' : '<p>Listed in the stable app’s radio picker.</p>'}
       <dl class="rc-specs">
-        <div><dt>${development ? 'Connections in testing' : 'Connection'}</dt><dd>${connections.join(' + ')}</dd></div>
+        <div><dt>${development ? 'Planned connections' : 'Connection'}</dt><dd>${connections.join(' + ')}</dd></div>
         <div><dt>Modes</dt><dd>${formatMode(r)}</dd></div>
         <div><dt>Channel capacity</dt><dd>${r.channels.toLocaleString()} channels</dd></div>
         <div><dt>Channel name limit</dt><dd>${r.nameLength ? `${r.nameLength} characters` : 'Not verified'}</dd></div>
@@ -107,8 +133,8 @@ export function initRadioCatalog() {
     if(button.dataset.open==='status')showDialog('<p class="rc-eyebrow">UNDERSTANDING SUPPORT</p><h2 id="radio-dialog-title">What the statuses mean.</h2><h3>Supported</h3><p>The exact model is in the app registry. This does not mean every firmware version, regional variant, or setting has been independently verified.</p><h3>In development</h3><p>A driver is under active investigation or testing and is not yet in the supported-model list. It may only be available in development builds.</p><h3>Connection details</h3><p>Bluetooth describes native Bluetooth for the listed model. It does not promise support for every external programming adapter. The GMRS-only filter reflects the app’s explicit profile flag, not a complete regulatory classification.</p><p>This catalog is a dated snapshot maintained with the project; it does not query your radio or update automatically.</p>');
     if(button.dataset.copyRadio){
       const url=new URL(location.href);url.search='';url.searchParams.set('radio',button.dataset.copyRadio);url.hash='radios';
-      try{await navigator.clipboard.writeText(url.href);notify('Radio link copied.');}
-      catch{showDialog(`<h2 id="radio-dialog-title">Copy this radio link.</h2><label for="radio-copy-link">Radio link</label><input id="radio-copy-link" readonly value="${escapeHTML(url.href)}">`);$('#radio-copy-link').select();}
+      try{await navigator.clipboard.writeText(url.href);notify('Link copied.');}
+      catch{showDialog(`<h2 id="radio-dialog-title">Copy this link</h2><label for="radio-copy-link">Model link</label><input id="radio-copy-link" readonly value="${escapeHTML(url.href)}">`);$('#radio-copy-link').select();}
     }
   });
   $('#radio-grid').addEventListener('change',event=>{if(event.target.dataset.compare)toggleCompare(event.target.dataset.compare,event.target.checked);});

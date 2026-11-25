@@ -47,6 +47,20 @@
       "notes": ""
     },
     {
+      "id": "bf888s",
+      "brand": "Baofeng",
+      "name": "BF-888S",
+      "usb": true,
+      "bluetooth": false,
+      "digital": false,
+      "gmrs": false,
+      "channels": 16,
+      "nameLength": null,
+      "status": "development",
+      "aliases": ["BF-888"],
+      "notes": "Field Programmer support is in development for this 16-channel analog handheld."
+    },
+    {
       "id": "bf_f8",
       "brand": "Baofeng",
       "name": "BF-F8",
@@ -557,6 +571,19 @@
       "status": "supported",
       "aliases": [],
       "notes": ""
+    },
+    {
+      "id": "tid_bt1",
+      "brand": "TIDRadio",
+      "name": "BT1",
+      "usb": false,
+      "bluetooth": false,
+      "programmingAdapter": true,
+      "digital": false,
+      "gmrs": false,
+      "status": "development",
+      "aliases": [],
+      "notes": "Field Programmer support for this programming adapter is in development."
     },
     {
       "id": "tdh8",

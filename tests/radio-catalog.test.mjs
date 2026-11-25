@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { filterRadios } from '../src/utils/radio-catalog.js';
+import { describeEntry, filterRadios, formatCatalogCount } from '../src/utils/radio-catalog.js';
 const { radios, checked } = JSON.parse(readFileSync(new URL('../src/data/radio-catalog.json',import.meta.url)));
 
 test('catalog entries have stable unique IDs and valid support metadata',()=>{
@@ -12,7 +12,11 @@ test('catalog entries have stable unique IDs and valid support metadata',()=>{
     assert.match(r.id,/^[a-z0-9_]+$/);
     assert.ok(r.brand&&r.name);
     assert.ok(['supported','development'].includes(r.status));
-    assert.ok(Number.isInteger(r.channels)&&r.channels>0);
+    if (r.programmingAdapter) {
+      assert.equal(r.channels, undefined);
+    } else {
+      assert.ok(Number.isInteger(r.channels) && r.channels > 0);
+    }
     assert.ok(r.nameLength==null||(Number.isInteger(r.nameLength)&&r.nameLength>0));
     for(const flag of ['usb','bluetooth','digital','gmrs'])assert.equal(typeof r[flag],'boolean');
   }
@@ -20,6 +24,8 @@ test('catalog entries have stable unique IDs and valid support metadata',()=>{
 test('model searches ignore punctuation and rank an exact alias first',()=>{
   assert.equal(filterRadios(radios,{query:'DM32'})[0].id,'dm32');
   assert.equal(filterRadios(radios,{query:'DM36'})[0].id,'dm36');
+  assert.equal(filterRadios(radios,{query:'BF888'})[0].id,'bf888s');
+  assert.equal(filterRadios(radios,{query:'TIDRadio BT1'})[0].id,'tid_bt1');
   assert.equal(filterRadios(radios,{query:'Baofeng UV5RM'})[0].id,'baofeng_5rm');
   assert.equal(filterRadios(radios,{query:'uv 32'})[0].id,'uv32');
   assert.equal(filterRadios(radios,{query:'UV-32 Pro'}).length,0);
@@ -50,5 +56,17 @@ test('DM-32 capability and capacity results reflect its app profile',()=>{
   assert.ok(dm32);assert.equal(dm32.bluetooth,false);assert.equal(dm32.usb,true);
   assert.equal(dm32.channels,4000);assert.equal(dm32.nameLength,16);
   const sorted=filterRadios(radios,{sort:'channels'});
-  assert.ok(sorted.every((r,i)=>i===0||sorted[i-1].channels>=r.channels));
+  assert.ok(sorted.every((r,i)=>i===0||(sorted[i-1].channels ?? 0)>=(r.channels ?? 0)));
+});
+
+test('BT1 is a development adapter and only the BF-888S matches radio capability filters', () => {
+  const bt1 = filterRadios(radios, { query: 'BT1', status: 'development' });
+  assert.equal(bt1.length, 1);
+  assert.equal(describeEntry(bt1[0]), 'Programming adapter');
+  assert.equal(formatCatalogCount(bt1), '1 adapter found · 0 supported, 1 in development');
+  assert.equal(filterRadios(radios, { query: 'BT1', mode: 'analog' }).length, 0);
+  assert.equal(filterRadios(radios, { query: 'BT1', connection: 'bluetooth' }).length, 0);
+  const bf888 = filterRadios(radios, { query: 'BF888', mode: 'analog', status: 'development' });
+  assert.equal(bf888.length, 1);
+  assert.equal(bf888[0].channels, 16);
 });
