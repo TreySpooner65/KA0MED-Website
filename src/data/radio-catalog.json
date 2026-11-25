@@ -1,5 +1,5 @@
 {
-  "checked": "2026-11-01",
+  "checked": "2026-11-25",
   "radios": [
     {
       "id": "baofeng_5rm",
@@ -116,7 +116,23 @@
       "aliases": [
         "DM32"
       ],
-      "notes": "Supports analog and DMR programming. Save a model-specific codeplug before editing radio identity, zones, or settings."
+      "notes": "Program analog and DMR channels, zones, DMR contacts, and Radio ID over USB. Scan-list editing and APRS/GPS fixes are in development."
+    },
+    {
+      "id": "dm36",
+      "brand": "Baofeng",
+      "name": "DM-36",
+      "usb": true,
+      "bluetooth": true,
+      "digital": true,
+      "gmrs": false,
+      "channels": 4000,
+      "nameLength": 16,
+      "status": "development",
+      "aliases": [
+        "DM36"
+      ],
+      "notes": "USB programming and native Bluetooth reads are in development. Bluetooth writes are experimental and still being tested."
     },
     {
       "id": "ff_12p",
@@ -667,18 +683,18 @@
       "brand": "Radtel",
       "name": "RT-950 Pro",
       "usb": true,
-      "bluetooth": false,
+      "bluetooth": true,
       "digital": false,
       "gmrs": false,
       "channels": 990,
-      "nameLength": null,
+      "nameLength": 12,
       "status": "development",
       "aliases": [
         "RT950 Pro",
         "950 Pro",
         "RT-950PRO"
       ],
-      "notes": "USB driver in development. Read/write testing is ongoing; this model is not yet in the supported-model registry."
+      "notes": "The development driver supports test reads over USB and native Bluetooth. USB writes are being tested for channel names and frequencies."
     }
   ]
 }

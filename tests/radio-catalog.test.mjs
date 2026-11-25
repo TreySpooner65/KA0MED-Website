@@ -19,6 +19,7 @@ test('catalog entries have stable unique IDs and valid support metadata',()=>{
 });
 test('model searches ignore punctuation and rank an exact alias first',()=>{
   assert.equal(filterRadios(radios,{query:'DM32'})[0].id,'dm32');
+  assert.equal(filterRadios(radios,{query:'DM36'})[0].id,'dm36');
   assert.equal(filterRadios(radios,{query:'Baofeng UV5RM'})[0].id,'baofeng_5rm');
   assert.equal(filterRadios(radios,{query:'uv 32'})[0].id,'uv32');
   assert.equal(filterRadios(radios,{query:'UV-32 Pro'}).length,0);
@@ -37,8 +38,10 @@ test('development models are separated from supported counts',()=>{
   const development=filterRadios(radios,{status:'development'});
   assert.ok(supported.every(r=>r.status==='supported'));
   assert.ok(development.every(r=>r.status==='development'));
-  assert.ok(development.some(r=>r.id==='rt950pro'));
-  assert.ok(!supported.some(r=>r.id==='rt950pro'));
+  for (const id of ['dm36', 'rt950pro']) {
+    assert.ok(development.some(r=>r.id===id && r.usb && r.bluetooth));
+    assert.ok(!supported.some(r=>r.id===id));
+  }
   assert.equal(supported.length+development.length,radios.length);
 });
 test('DM-32 capability and capacity results reflect its app profile',()=>{

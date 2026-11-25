@@ -59,11 +59,39 @@ export function initRadioCatalog() {
     const r=radios.find(r=>r.id===id);if(!r)return;
     if(update){const url=new URL(location.href);url.searchParams.set('radio',id);history.replaceState(null,'',url);}
     const note=r.notes||(r.bluetooth?'USB and native Bluetooth are listed for this model. Use the exact model profile.':'USB programming is listed. Native Bluetooth is not listed; external adapters require their own compatibility check.');
-    showDialog(`<p class="rc-eyebrow">${escapeHTML(r.brand)} / RADIO DETAILS</p><h2 id="radio-dialog-title">${escapeHTML(r.name)}</h2>${status(r)}<p>${r.status==='supported'?'Listed in the Field Programmer model registry.':'Experimental driver work; not yet part of the supported-model list.'}</p><dl class="rc-specs"><div><dt>Connection</dt><dd>${r.usb?'USB':''}${r.bluetooth?' + Native Bluetooth':''}</dd></div><div><dt>Modes</dt><dd>${formatMode(r)}</dd></div><div><dt>Channel capacity</dt><dd>${r.channels.toLocaleString()} channels</dd></div><div><dt>Channel name limit</dt><dd>${r.nameLength?r.nameLength+' characters':'Not verified'}</dd></div></dl><p class="rc-note">${escapeHTML(note)}</p><p>Confirm your model and firmware, read the radio, and save the original codeplug before editing. Firmware and regional variants can differ.</p><div class="rc-dialog-actions"><button class="rc-solid" data-detail-compare="${id}">${selected.has(id)?'Remove from comparison':'Add to comparison'}</button><button class="rc-text" data-copy-radio="${id}">Copy radio link ↗</button></div>`);
+    const development = r.status === 'development';
+    const connections = [];
+    if (r.usb) connections.push('USB');
+    if (r.bluetooth) connections.push('Native Bluetooth');
+    showDialog(`
+      <p class="rc-eyebrow">${escapeHTML(r.brand)} / RADIO DETAILS</p>
+      <h2 id="radio-dialog-title">${escapeHTML(r.name)}</h2>
+      ${status(r)}
+      <p>${development ? 'Available in development builds.' : 'Listed in the stable app’s radio picker.'}</p>
+      <dl class="rc-specs">
+        <div><dt>${development ? 'Connections in testing' : 'Connection'}</dt><dd>${connections.join(' + ')}</dd></div>
+        <div><dt>Modes</dt><dd>${formatMode(r)}</dd></div>
+        <div><dt>Channel capacity</dt><dd>${r.channels.toLocaleString()} channels</dd></div>
+        <div><dt>Channel name limit</dt><dd>${r.nameLength ? `${r.nameLength} characters` : 'Not verified'}</dd></div>
+      </dl>
+      <p class="rc-note">${escapeHTML(note)}</p>
+      <p>Confirm your model and firmware, read the radio, and save the original codeplug before editing. Firmware and regional variants can differ.</p>
+      <div class="rc-dialog-actions">
+        <button class="rc-solid" data-detail-compare="${id}">${selected.has(id) ? 'Remove from comparison' : 'Add to comparison'}</button>
+        <button class="rc-text" data-copy-radio="${id}">Copy radio link</button>
+      </div>`);
   }
   function compare(){
     const list=[...selected].map(id=>radios.find(r=>r.id===id));if(list.length<2)return;
-    const rows=[['Status',r=>r.status==='supported'?'Supported':'In development'],['USB',r=>r.usb?'Yes':'Not listed'],['Native Bluetooth',r=>r.bluetooth?'Yes':'Not listed'],['Modes',formatMode],['Channels',r=>r.channels.toLocaleString()],['Channel name limit',r=>r.nameLength?r.nameLength+' characters':'Not verified']];
+    const connectionStatus = r => r.status === 'development' ? 'In testing' : 'Yes';
+    const rows = [
+      ['Status', r => r.status === 'supported' ? 'Supported' : 'In development'],
+      ['USB', r => r.usb ? connectionStatus(r) : 'Not listed'],
+      ['Native Bluetooth', r => r.bluetooth ? connectionStatus(r) : 'Not listed'],
+      ['Modes', formatMode],
+      ['Channels', r => r.channels.toLocaleString()],
+      ['Channel name limit', r => r.nameLength ? `${r.nameLength} characters` : 'Not verified'],
+    ];
     showDialog(`<p class="rc-eyebrow">SIDE BY SIDE</p><h2 id="radio-dialog-title">Compare your radios.</h2><p>Capabilities reflect the app profiles. Firmware and regional versions can differ.</p><div class="rc-table-wrap" role="region" aria-label="Radio comparison" tabindex="0"><table><thead><tr><th scope="col">Capability</th>${list.map(r=>`<th scope="col">${escapeHTML(r.brand)}<br>${escapeHTML(r.name)}</th>`).join('')}</tr></thead><tbody>${rows.map(([label,value])=>`<tr><th scope="row">${label}</th>${list.map(r=>`<td>${value(r)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p>Native Bluetooth is separate from external adapter support. Check the exact generation before selecting your model in the app.</p>`,true);
   }
   root.addEventListener('click',async event=>{

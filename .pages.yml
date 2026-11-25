@@ -51,7 +51,11 @@ content:
       - { name: heroAccent, label: Hero Highlighted Line, type: string, required: true }
       - { name: heroFinalLine, label: Hero Final Line, type: string, required: true }
       - { name: description, label: App Description, type: text, required: true }
-      - { name: buttonLabel, label: Button Label, type: string, required: true }
+      - { name: downloadLabel, label: Google Play Button Label, type: string, required: true }
+      - { name: buttonLabel, label: Radio Catalog Link Label, type: string, required: true }
+      - { name: version, label: Google Play Version, type: string, required: true }
+      - { name: releaseDate, label: Google Play Release Date (YYYY-MM-DD), type: string, required: true }
+      - { name: releaseSummary, label: Release Summary, type: text, required: true }
       - { name: featureOneTitle, label: Feature 1 Title, type: string, required: true }
       - { name: featureOneDescription, label: Feature 1 Description, type: text, required: true }
       - { name: featureTwoTitle, label: Feature 2 Title, type: string, required: true }

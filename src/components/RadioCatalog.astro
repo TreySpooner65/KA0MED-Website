@@ -1,7 +1,7 @@
 ---
 import catalog from '../data/radio-catalog.json';
 import '../styles/radio-catalog.css';
-const { kicker = 'RADIO SUPPORT TRACKER', title = 'Find your radio. Know its status.' } = Astro.props;
+const { kicker = 'RADIO SUPPORT TRACKER', title = 'Find your radio. Know its status.', playUrl } = Astro.props;
 const supported = catalog.radios.filter(r => r.status === 'supported');
 const brandCount = new Set(supported.map(r => r.brand)).size;
 const brands = [...new Set(catalog.radios.map(r => r.brand))].sort();
@@ -26,8 +26,8 @@ const date = new Date(`${catalog.checked}T12:00:00Z`).toLocaleDateString('en-US'
       <div class="rc-bottom" data-enhanced hidden><span id="shown-count"></span><button class="rc-outline" id="load-more" hidden>Show more radios ↓</button></div>
     </div>
   </div>
-  <div class="rc-source"><p><b>Snapshot checked {date}.</b> Supported means the exact model is listed in the app registry; it does not verify every firmware or setting. Native Bluetooth is separate from external adapter compatibility. Development models are excluded from the supported total.</p><button class="rc-text" data-open="status" data-enhanced hidden>About these statuses ↗</button></div>
-  <div class="rc-download"><div><b>READY TO CONNECT?</b><p>Read your radio first and save a backup before editing.</p></div><a href="https://play.google.com/store/apps/details?id=com.ka0med.fieldprogrammer" class="button" target="_blank" rel="noopener">Get Field Programmer on Google Play ↗</a></div>
+  <div class="rc-source"><p><b>Catalog checked {date}.</b> Supported models appear in the stable app’s radio picker. Firmware and regional variants can differ. Connection labels on development entries show what’s being tested. Bluetooth labels refer to native Bluetooth.</p><button class="rc-text" data-open="status" data-enhanced hidden>About these statuses ↗</button></div>
+  <div class="rc-download"><div><b>READY TO CONNECT?</b><p>Read your radio first and save a backup before editing.</p></div><a href={playUrl} class="button">Get Field Programmer on Google Play</a></div>
   <noscript><p class="rc-noscript">All models and basic details are shown above. Enable JavaScript to search, filter, and compare radios.</p></noscript>
   <div id="compare-tray" class="rc-compare-tray" hidden><div><b id="compare-count"></b><span>Select up to 3 radios</span></div><button class="rc-text" id="clear-compare">Clear</button><button class="rc-solid" id="compare-button">Compare radios ↗</button></div>
   <dialog id="radio-detail-dialog" aria-labelledby="radio-dialog-title"><button class="rc-close" aria-label="Close radio dialog">×</button><div id="radio-dialog-content"></div></dialog>
