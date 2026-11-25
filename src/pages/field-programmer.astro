@@ -1,5 +1,86 @@
 ---
 import Base from '../layouts/Base.astro';
 import app from '../data/field-programmer.json';
+import RadioCatalog from '../components/RadioCatalog.astro';
+
+const playUrl = 'https://play.google.com/store/apps/details?id=com.ka0med.fieldprogrammer';
+const releaseDate = new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeZone: 'UTC' })
+  .format(new Date(`${app.releaseDate}T00:00:00Z`));
 ---
-<Base title="Field Programmer"><section class="app-hero"><div><p class="eyebrow">{app.kicker}</p><h1>{app.heroTitle}<br/><em>{app.heroAccent}</em><br/>{app.heroFinalLine}</h1><p>{app.description}</p><a class="button" href="#radios">{app.buttonLabel}</a></div><div class="fp-badge"><span>FP</span><b>FIELD<br/>PROGRAMMER</b><small>BY KA0MED</small></div></section><section class="section"><div class="feature-grid"><div><b>01</b><h3>{app.featureOneTitle}</h3><p>{app.featureOneDescription}</p></div><div><b>02</b><h3>{app.featureTwoTitle}</h3><p>{app.featureTwoDescription}</p></div><div><b>03</b><h3>{app.featureThreeTitle}</h3><p>{app.featureThreeDescription}</p></div></div><div id="radios" class="supported"><p class="eyebrow">{app.supportedKicker}</p><h2>{app.supportedTitle}</h2><div class="chips">{app.supportedRadios.map((radio) => <span>{radio}</span>)}</div></div></section></Base>
+<Base title="Field Programmer" description={app.description}>
+  <section class="app-hero">
+    <div>
+      <p class="eyebrow">{app.kicker}</p>
+      <h1>{app.heroTitle}<br /><em>{app.heroAccent}</em><br />{app.heroFinalLine}</h1>
+      <p>{app.description}</p>
+      <div class="app-download-actions">
+        <a class="button" href={playUrl}>{app.downloadLabel}</a>
+        <a class="text-link" href="#radios">{app.buttonLabel}</a>
+      </div>
+      <p class="app-requirements">Free download for Android 8.0 and up</p>
+    </div>
+    <div class="fp-badge"><span>FP</span><b>FIELD<br />PROGRAMMER</b><small>BY KA0MED</small></div>
+  </section>
+
+  <section class="section" aria-label="Field Programmer features and radio support">
+    <div class="feature-grid">
+      <div><h2>{app.featureOneTitle}</h2><p>{app.featureOneDescription}</p></div>
+      <div><h2>{app.featureTwoTitle}</h2><p>{app.featureTwoDescription}</p></div>
+      <div><h2>{app.featureThreeTitle}</h2><p>{app.featureThreeDescription}</p></div>
+    </div>
+
+    <section class="app-release" aria-labelledby="app-release-title">
+      <h2 id="app-release-title">What’s new in {app.version}</h2>
+      <time datetime={app.releaseDate}>{releaseDate}</time>
+      <p>{app.releaseSummary}</p>
+    </section>
+
+    <RadioCatalog kicker={app.supportedKicker} title={app.supportedTitle} playUrl={playUrl} />
+  </section>
+</Base>
+
+<style>
+  .app-download-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+
+  .app-download-actions .text-link {
+    font-size: 0.875rem;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .app-hero > div > .app-requirements {
+    font-size: 0.875rem;
+    margin: 1rem 0 0;
+  }
+
+  .feature-grid h2 {
+    font-size: 1.5rem;
+  }
+
+  .app-release {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--moss);
+    background: var(--cream);
+  }
+
+  .app-release h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .app-release time {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  .app-release p {
+    margin: 0.75rem 0 0;
+    line-height: 1.6;
+  }
+</style>
